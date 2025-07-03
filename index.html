@@ -1,357 +1,141 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>WARNING!</title>
-<style>
-  /* Basic reset */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isi Hati Fadhil</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            color: #333;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 2s ease;
+        }
 
-  html, body {
-    height: 100%;
-    overflow: hidden;
-    background: #000000;
-    font-family: 'Courier New', Courier, monospace;
-    user-select: none;
-    color: #0f0;
-  }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
 
-  #container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    max-width: 350px;
-    max-height: 600px;
-    margin: auto;
-    overflow: hidden;
-    background: black;
-    border: 3px solid #0f0;
-    box-shadow: 0 0 20px #0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-  /* Glitch text style */
-  .glitch {
-    position: relative;
-    font-size: 2.2em;
-    font-weight: bold;
-    color: #0f0;
-    text-transform: uppercase;
-    animation: flicker 1.5s infinite alternate;
-  }
-  .glitch::before,
-  .glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0.8;
-    color: #0f0;
-    clip: rect(0, 900px, 0, 0);
-  }
-  .glitch::before {
-    animation: glitch-anim-1 2s infinite linear alternate-reverse;
-    left: 2px;
-    text-shadow: -2px 0 #f0f;
-  }
-  .glitch::after {
-    animation: glitch-anim-2 3s infinite linear alternate-reverse;
-    left: -2px;
-    text-shadow: 2px 0 #0ff;
-  }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
 
-  @keyframes glitch-anim-1 {
-    0% {
-      clip: rect(42px, 9999px, 44px, 0);
-      transform: translate(-2px, -2px);
-    }
-    20% {
-      clip: rect(12px, 9999px, 44px, 0);
-      transform: translate(2px, 2px);
-    }
-    40% {
-      clip: rect(22px, 9999px, 84px, 0);
-      transform: translate(-2px, 2px);
-    }
-    60% {
-      clip: rect(62px, 9999px, 44px, 0);
-      transform: translate(2px, -2px);
-    }
-    80% {
-      clip: rect(12px, 9999px, 74px, 0);
-      transform: translate(-2px, 2px);
-    }
-    100% {
-      clip: rect(42px, 9999px, 44px, 0);
-      transform: translate(2px, -2px);
-    }
-  }
-  @keyframes glitch-anim-2 {
-    0% {
-      clip: rect(12px, 9999px, 44px, 0);
-      transform: translate(2px, 0);
-    }
-    20% {
-      clip: rect(32px, 9999px, 14px, 0);
-      transform: translate(-2px, 1px);
-    }
-    40% {
-      clip: rect(42px, 9999px, 54px, 0);
-      transform: translate(2px, -1px);
-    }
-    60% {
-      clip: rect(82px, 9999px, 44px, 0);
-      transform: translate(-2px, 0);
-    }
-    80% {
-      clip: rect(22px, 9999px, 74px, 0);
-      transform: translate(2px, 1px);
-    }
-    100% {
-      clip: rect(12px, 9999px, 44px, 0);
-      transform: translate(-2px, 0);
-    }
-  }
+        .btn:active {
+            transform: translateY(1px);
+        }
 
-  @keyframes flicker {
-    0%, 100% {opacity: 1;}
-    50% {opacity: 0.6;}
-  }
+        .pamela-text {
+            position: absolute;
+            font-size: 2rem;
+            color: white;
+            opacity: 0;
+            pointer-events: none;
+            animation: flying 3s linear infinite;
+        }
 
-  /* Flicker background flashes */
-  @keyframes flash-bg {
-    0%,100% {background: black;}
-    50% {background: #0f0;}
-  }
+        @keyframes flying {
+            0% { 
+                transform: translateX(100vw) translateY(0) rotate(0deg); 
+                opacity: 1;
+            }
+            100% { 
+                transform: translateX(-100px) translateY(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
 
-  /* Screen flicker effect */
-  .flicker-bg {
-    animation: flash-bg 0.1s infinite;
-  }
+        .hidden {
+            display: none;
+        }
 
-  /* Scary message style */
-  #scary-message {
-    color: #ff0000;
-    font-size: 2em;
-    font-weight: 900;
-    margin-top: 20px;
-    text-align: center;
-    text-shadow:
-       0 0 5px #ff0000,
-       0 0 10px #ff0000,
-       0 0 20px #ff0000,
-       0 0 40px #ff0000;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-  }
-
-  /* "izz" message style similar but smaller and slightly more blue */
-  .izz-message {
-    color: #55aaff;
-    font-size: 1.6em;
-    font-weight: 900;
-    margin-top: 10px;
-    text-align: center;
-    text-shadow:
-       0 0 5px #55aaff,
-       0 0 10px #55aaff,
-       0 0 20px #55aaff;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    animation: flicker 1.5s infinite alternate;
-  }
-
-  /* Strange console lines container */
-  #console {
-    width: 90%;
-    max-width: 320px;
-    height: 150px;
-    background: rgba(0, 0, 0, 0.85);
-    border: 1px solid #0f0;
-    margin-top: 15px;
-    overflow-y: auto;
-    font-size: 0.9em;
-    line-height: 1.2em;
-    padding: 10px;
-    font-family: monospace;
-    box-shadow: inset 0 0 10px #0f0;
-  }
-
-  .console-line {
-    color: #0f0;
-    white-space: nowrap;
-  }
-  .console-line.error {
-    color: #ff4444;
-  }
-  .console-line.warning {
-    color: #ffaa00;
-  }
-  .console-line.scary {
-    color: #ff0000;
-  }
-
-</style>
+        .final-message {
+            font-size: 2rem;
+            color: white;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+    </style>
 </head>
 <body>
-<div id="container">
-  <div id="glitch-text" class="glitch" data-text="WARNING! SYSTEM INFECTED">WARNING! SYSTEM INFECTED</div>
-  <div id="console"></div>
-  <div id="scary-message">aku sedang memantau hp mu</div>
-</div>
+    <h1 id="title">Isi hati fadhil</h1>
+    <button id="btn" class="btn">Buka</button>
 
-<!-- Flicker sound effects (short spooky noises) -->
-<audio id="sound1" preload="auto" volume="0.15">
-  <source src="data:audio/wav;base64,UklGRmQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YZoAAIAAAP8AAAD/AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA/wD//wD//wAA/wD//wD//wD//wD//wD//wD//wD//wAA/wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA" type="audio/wav" />
-</audio>
-<audio id="sound2" preload="auto" volume="0.15">
-  <source src="data:audio/wav;base64,UklGRmIAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YZAAAIAAAAD//wAA/wAAAP8AAAD/AAD//wAA/wAA/wAA/wAA/wAA/wAA/wAA/wAA/wAA/wAA/wAA/wAA/wAA" type="audio/wav" />
-</audio>
-<audio id="sound3" preload="auto" volume="0.15">
-  <source src="data:audio/wav;base64,UklGRkIAAAAXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YUIAAAB/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/" type="audio/wav" />
-</audio>
+    <div id="pamelaContainer" class="hidden">
+        <div id="pamelaText" class="pamela-text">Pamela</div>
+    </div>
 
-<!-- Scary climax sound effect for the message reveal -->
-<audio id="scary-sound" preload="auto" volume="0.8">
-  <source src="data:audio/wav;base64,UklGRrAAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YaQAAABu+g94NOqlDknXjlftV/5ljpgmgL8HTrrVyFY2NSzmx3ocxDhP2pY3WGCQDIUNUkshv6UxwnY+DFVnEo0lm9peVX+cn+ZLhsjxEGNv8oXaTU0qRoR9G8UOtqqVRAxITzH4XLzMo0qM+rDQ3y53Et4TE27/imWSVZhSd9R4thB9l3+GQiYpgUk96yuXQV+x2nmfwg8kQve+L5KhbvuM6OQt90S1aAd4rAu1/Qz0cjtDbF7zjHMX4ITmq7Ry4xLTs9k2lIzfc2+xGz3AA9NbWcQHUlB7oQw5njUe6PsT6rAwXZBiyS0OK6ER3XHrY86X2+GF/wOBA/ZcxpiPjjWY7nvTnJ6NtYG11kzMphexioncIlP2uLFTHmA7W+/a+Fj1WQZOh4psEvGVQE6jbGSVJEORl0mkZZyZi2VPk6v+lCuIEqw==" type="audio/wav" />
-</audio>
+    <div id="finalMessage" class="final-message">ada kamu &lt;3</div>
 
-<script>
-  const consoleEl = document.getElementById('console');
-  const scaryMessage = document.getElementById('scary-message');
-  const glitchText = document.getElementById('glitch-text');
-  const container = document.getElementById('container');
+    <script>
+        const btn = document.getElementById('btn');
+        const title = document.getElementById('title');
+        const pamelaContainer = document.getElementById('pamelaContainer');
+        const pamelaTexts = [];
+        const finalMessage = document.getElementById('finalMessage');
 
-  // Audio elements for flicker sounds
-  const sound1 = document.getElementById('sound1');
-  const sound2 = document.getElementById('sound2');
-  const sound3 = document.getElementById('sound3');
-  const scarySound = document.getElementById('scary-sound');
+        btn.addEventListener('click', () => {
+            document.body.style.backgroundColor = '#ff69b4';
+            pamelaContainer.classList.remove('hidden');
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const text = document.createElement('div');
+                    text.className = 'pamela-text';
+                    text.textContent = 'Pamela';
+                    text.style.left = Math.random() * 100 + 'vw';
+                    text.style.top = Math.random() * 100 + 'vh';
+                    text.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
+                    text.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                    pamelaContainer.appendChild(text);
+                    pamelaTexts.push(text);
+                }, Math.random() * 500);
+            }
 
-  // Array of flicker sounds
-  const flickerSounds = [sound1, sound2, sound3];
+            setTimeout(() => {
+                btn.style.opacity = '0';
+                title.style.opacity = '0';
+                
+                setTimeout(() => {
+                    btn.classList.add('hidden');
+                    title.classList.add('hidden');
+                }, 500);
+            }, 1000);
 
-  // Lines to simulate virus "activity"
-  const virusMessages = [
-    "[ERROR] System32 corrupted!",
-    "[WARNING] Izz Harits Robbani detected!",
-    "[INFO] Scanning files...",
-    "[ERROR] Cannot find important.dll",
-    "[WARNING] Memory usage critical!",
-    "[INFO] Uploading data to remote server...",
-    "[ERROR] Application crashed unexpectedly!",
-    "[WARNING] Firewall disabled!",
-    "[INFO] Accessing camera and mic...",
-    "[ERROR] Critical system failure imminent!",
-    "[WARNING] Deleting random files...",
-    "[ERROR] Virus spreading in background!",
-  ];
-
-  function addConsoleLine(text, type="info") {
-    const p = document.createElement('div');
-    p.classList.add('console-line');
-    if(type === "error") p.classList.add('error');
-    else if(type === "warning") p.classList.add('warning');
-    else if(type === "scary") p.classList.add('scary');
-    p.textContent = text;
-    consoleEl.appendChild(p);
-    consoleEl.scrollTop = consoleEl.scrollHeight;
-  }
-
-  // Play a random flicker sound with low volume for subtle effect
-  function playRandomFlickerSound() {
-    const snd = flickerSounds[Math.floor(Math.random() * flickerSounds.length)];
-    snd.currentTime = 0;
-    snd.volume = 0.15;
-    const playPromise = snd.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(_ => {});
-    }
-  }
-
-  // Function to randomly show glitch flicker effect with sound
-  function flickerEffect() {
-    container.classList.add('flicker-bg');
-    playRandomFlickerSound();
-    setTimeout(() => {
-      container.classList.remove('flicker-bg');
-    }, 100);
-  }
-
-  // Start flashing and adding random messages rapidly
-  let messageIndex = 0;
-
-  function startVirusSimulation() {
-    const interval = setInterval(() => {
-      flickerEffect();
-
-      if(messageIndex < virusMessages.length) {
-        let msg = virusMessages[messageIndex];
-        let type = "info";
-        if(msg.startsWith("[ERROR]")) type = "error";
-        else if(msg.startsWith("[WARNING]")) type = "warning";
-        addConsoleLine(msg, type);
-        messageIndex++;
-      } else {
-        clearInterval(interval);
-        showScaryMessage();
-      }
-    }, 700);
-  }
-
-  function showScaryMessage() {
-    // Hide glitch text and console
-    glitchText.style.opacity = '0';
-    consoleEl.style.opacity = '0';
-
-    // Play scary climax sound louder and once
-    scarySound.currentTime = 0;
-    scarySound.volume = 0.8;
-    scarySound.play().catch(() => {});
-
-    // Show scary message with flickering effect
-    scaryMessage.style.opacity = '1';
-    let flickerCount = 0;
-    const flickerInterval = setInterval(() => {
-      scaryMessage.style.opacity = scaryMessage.style.opacity === '1' ? '0.5' : '1';
-      flickerCount++;
-      if(flickerCount > 14) {
-        clearInterval(flickerInterval);
-        scaryMessage.style.opacity = '1';
-        showIzzMessage();
-      }
-    }, 300);
-  }
-
-  function showIzzMessage() {
-    // Create the "izz: lagi ngapain?" message element dynamically
-    const izz = document.createElement('div');
-    izz.textContent = "izz: lagi ngapain?";
-    izz.className = "izz-message";
-    izz.style.opacity = '0';
-    container.appendChild(izz);
-    // Fade in and flicker animation
-    setTimeout(() => {
-      izz.style.opacity = '1';
-    }, 100);
-  }
-
-  // Disable context menu and user selection to enhance "virus" effect
-  document.addEventListener('contextmenu', e => e.preventDefault());
-  document.addEventListener('selectstart', e => e.preventDefault());
-
-  // Start simulation on loading
-  window.onload = () => {
-    startVirusSimulation();
-  };
-</script>
+            setTimeout(() => {
+                pamelaTexts.forEach(text => {
+                    text.style.opacity = '0';
+                });
+                
+                setTimeout(() => {
+                    pamelaContainer.classList.add('hidden');
+                    pamelaContainer.innerHTML = '';
+                    finalMessage.style.opacity = '1';
+                }, 1000);
+            }, 5000);
+        });
+    </script>
 </body>
 </html>
